@@ -35,13 +35,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "pry"
 
-  # spec.add_dependency 'rest-client'
-  # spec.add_dependency 'wrest'
-  # spec.add_dependency 'rom-core'
-  spec.add_dependency 'rom'
-  spec.add_dependency 'rom-sql'
-  spec.add_dependency 'rom-repository'
-  spec.add_dependency 'sqlite3'
+  # spec.add_dependency 'rom'
+  # spec.add_dependency 'rom-sql'
+  # spec.add_dependency 'rom-repository'
+  # spec.add_dependency 'sqlite3'
+
   # spec.add_dependency 'rom-yaml'
   # spec.add_dependency 'rom-json'
   # spec.add_dependency 'rom-relation'
