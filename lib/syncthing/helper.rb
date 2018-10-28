@@ -13,8 +13,7 @@ gem_reqs = %w(multi_json
 
 app_reqs = %w(syncthing/helper/version
               syncthing/helper/api
-              syncthing/helper/cli
-              syncthing/helper/xml/config)
+              syncthing/helper/cli)
 
 (gem_reqs + app_reqs).each(&method(:require))
 # require 'syncthing/helper/api/model'
