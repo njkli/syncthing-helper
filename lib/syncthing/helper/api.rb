@@ -1,6 +1,5 @@
 require 'syncthing/helper/api/config'
 require 'syncthing/helper/api/updater'
-# require 'syncthing/helper/api/syncthing'
 
 module Syncthing
   module Helper
@@ -21,7 +20,11 @@ module Syncthing
         attr_accessor :firestore
         def init_firestore project_id: nil, credentials: nil
           @firestore ||= Google::Cloud::Firestore.new project_id: project_id, credentials: credentials
-          const_set(:Firestore, @firestore)
+          const_set :Firestore, @firestore
+          const_set :DB_FIELDS, {'devices' => [:device_id, :label],
+                                 'folders' => [:id, :path, :label]}
+          const_set :DB_FIELDS_CONFIG_OBJ, {'devices' => 'deviceID',
+                                    'folders' => 'id'}
         end
 
         def api_key_from_xml xml_file

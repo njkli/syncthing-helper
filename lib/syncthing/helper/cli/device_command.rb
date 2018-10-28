@@ -11,6 +11,7 @@ module Syncthing
             device_id, device_label = d.split ':'
             API::Firestore.doc('devices/' + device_id).set(device_id: device_id, label: device_label)
           end
+          trigger_updates
         end
       end
 
@@ -35,10 +36,7 @@ module Syncthing
 
         def execute
           super
-          idents.each do |ident|
-            document_id = (doc_ref col: 'devices', ident: ident).document_id
-            API::Firestore.doc('devices/' + document_id).delete
-          end
+          delete_record
         end
       end
 

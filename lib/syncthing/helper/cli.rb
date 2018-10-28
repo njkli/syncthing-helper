@@ -1,19 +1,9 @@
 Clamp.allow_options_after_parameters = true
+%w(syncthing/helper/cli/abstract_command
+   syncthing/helper/cli/demo_command
+   syncthing/helper/cli/device_command
+   syncthing/helper/cli/folder_command
 
-require 'syncthing/helper/cli/abstract_command'
-require 'syncthing/helper/cli/demo_command'
-require 'syncthing/helper/cli/device_command'
-require 'syncthing/helper/cli/folder_command'
+   syncthing/helper/cli/updater_command
 
-require 'syncthing/helper/cli/updater_command'
-
-# Should be last!
-require 'syncthing/helper/cli/main_command'
-
-module Syncthing
-  module Helper
-    module CLI
-
-    end
-  end
-end
+   syncthing/helper/cli/main_command).each(&method(:require))

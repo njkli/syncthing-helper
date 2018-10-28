@@ -38,10 +38,7 @@ module Syncthing
 
         def execute
           super
-          idents.each do |ident|
-            document_id = (doc_ref col: 'folders', ident: ident).document_id
-            API::Firestore.doc('folders/' + document_id).delete
-          end
+          delete_record
         end
       end
 

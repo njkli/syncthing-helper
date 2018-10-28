@@ -1,11 +1,6 @@
 module Syncthing
   module Helper
     module API
-      # @current_config = Syncthing::Helper::API::Config.new
-      # @current_config.connect syncthing_uri: syncthing_uri, syncthing_api_key: syncthing_api_key
-      # @current_config.retrieve
-      # do something
-      # @current_config.update
       class Config < OpenStruct
         include Roar::Client
         include Roar::JSON
@@ -22,11 +17,16 @@ module Syncthing
         end
 
         def retrieve
-          get(@opts) { |r| r.add_field('X-API-Key', @syncthing_api_key) }
+          get(@opts) { |r| auth(r) }
         end
 
         def update
-          post(@opts) { |r| r.add_field('X-API-Key', @syncthing_api_key) }
+          post(@opts) { |r| auth(r) }
+        end
+
+        private
+        def auth r
+          r.add_field('X-API-Key', @syncthing_api_key)
         end
       end
 

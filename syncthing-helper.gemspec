@@ -37,12 +37,21 @@ Gem::Specification.new do |spec|
 
   # spec.add_dependency 'rest-client'
   # spec.add_dependency 'wrest'
-  # spec.add_dependency 'virtus'
-  # spec.add_dependency 'dry-struct'
-  # spec.add_dependency 'virtus-relations'
-  # spec.add_dependency 'activeresource'
-  # spec.add_dependency 'saxy'
-  # spec.add_dependency 'hashie'
+  # spec.add_dependency 'rom-core'
+  spec.add_dependency 'rom'
+  spec.add_dependency 'rom-sql'
+  spec.add_dependency 'rom-repository'
+  spec.add_dependency 'sqlite3'
+  # spec.add_dependency 'rom-yaml'
+  # spec.add_dependency 'rom-json'
+  # spec.add_dependency 'rom-relation'
+  # spec.add_dependency 'rom-mapper'
+  # spec.add_dependency 'rom-repository'
+  # spec.add_dependency 'rom-changeset'
+
+  # spec.add_dependency 'rom-model'
+
+  spec.add_dependency 'semantic_logger'
   spec.add_dependency 'activesupport'
   spec.add_dependency "tty-table"
   spec.add_dependency 'nokogiri'

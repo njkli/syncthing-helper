@@ -1,16 +1,20 @@
 module Syncthing
   module Helper
     module CLI
-      class UpdaterStartCommand < AbstractCommand
+      class UpdaterCommand < AbstractCommand
+        option ['-k', '--key'], 'API_KEY', 'Syncthing Api key', environment_variable: 'SYNCTHING_API_KEY', attribute_name: :syncthing_api_key
+        option ['-c', '--config'], 'PATH', 'config.xml path', environment_variable: 'SYNCTHING_CONFIG_PATH', attribute_name: :xml_config
+
         def execute
           super
-          opts = {syncthing_uri: syncthing_uri,
-                  syncthing_api_key: syncthing_api_key}
           config_obj = API::Config.new
-          config_obj.connect opts
+          config_obj.connect(syncthing_uri: syncthing_uri,
+                             syncthing_api_key: api_key)
 
-          @devices = API::DevicesUpdater.new(config_obj: config_obj, col: 'devices')
-          @folders = API::FoldersUpdater.new(config_obj: config_obj, col: 'folders')
+          %w(devices folders).each do |col_name|
+            klass = ('Syncthing::Helper::API::' + col_name.capitalize + 'Updater').constantize
+            instance_variable_set ('@' + col_name).to_sym, klass.new(config_obj: config_obj, col: col_name)
+          end
 
           %w(term int quit).map(&:upcase).each do |sig|
             Signal.trap(sig) do
@@ -23,15 +27,14 @@ module Syncthing
         end
 
         def shutdown
-          @devices.async.listener.stop
-          @folders.async.listener.stop
+          @devices.listener.stop
+          @folders.listener.stop
           sleep 5
         end
-      end
 
-      class UpdaterCommand < AbstractCommand
-        self.default_subcommand = 'start'
-        subcommand ['start', 'daemon'], 'Start background config sync', UpdaterStartCommand
+        def api_key
+          syncthing_api_key || Syncthing::Helper::API.api_key_from_xml(xml_config)
+        end
       end
     end
   end
